@@ -1,27 +1,44 @@
+diff --git a/vendor/CMakeLists.fastboot.txt b/vendor/CMakeLists.fastboot.txt
+index a217ecc..884c861 100644
 --- a/vendor/CMakeLists.fastboot.txt
 +++ b/vendor/CMakeLists.fastboot.txt
-@@ -72,7 +72,8 @@
+@@ -72,7 +72,10 @@ add_library(libselinux STATIC
  	selinux/libselinux/src/setenforce.c
  	selinux/libselinux/src/setrans_client.c
  	selinux/libselinux/src/seusers.c
 -	selinux/libselinux/src/sha1.c)
 +	selinux/libselinux/src/sha1.c
-+	selinux/libselinux/src/android/android_platform.c)
++	selinux/libselinux/src/android/android_platform.c
++  selinux/libselinux/src/context.c
++  core/libpackagelistparser/packagelistparser.cpp)
 
  target_compile_definitions(libselinux PRIVATE
  	-DAUDITD_LOG_TAG=1003 -D_GNU_SOURCE -DHOST -DUSE_PCRE2
-@@ -80,7 +81,13 @@
- 	-DDISABLE_BOOL -DNO_MEDIA_BACKEND -DNO_X_BACKEND -DNO_DB_BACKEND
- 	-DPCRE2_CODE_UNIT_WIDTH=8)
+@@ -82,6 +85,13 @@ target_compile_definitions(libselinux PRIVATE
  target_include_directories(libselinux PUBLIC
--	selinux/libselinux/include selinux/libsepol/include)
-+	selinux/libselinux/include
-+	selinux/libsepol/include
-+	selinux/libselinux/src
-+	libselinux/src/android
-+	core/libpackagelistparser/include
-+	core/include
-+	logging/liblog/include)
+ 	selinux/libselinux/include selinux/libsepol/include)
 
++target_include_directories(libselinux PRIVATE
++  selinux/libselinux/src
++  libselinux/src/android
++	core/include
++  core/libpackagelistparser/include
++	logging/liblog/include)
++
  add_library(libsepol
  	selinux/libsepol/src/assertion.c
+ 	selinux/libsepol/src/avrule_block.c
+@@ -100,6 +110,7 @@ add_library(libsepol
+ 	selinux/libsepol/src/policydb.c
+ 	selinux/libsepol/src/policydb_convert.c
+ 	selinux/libsepol/src/policydb_public.c
++  selinux/libsepol/src/policydb_validate.c
+ 	selinux/libsepol/src/services.c
+ 	selinux/libsepol/src/sidtab.c
+ 	selinux/libsepol/src/symtab.c
+@@ -136,4 +147,4 @@ target_compile_definitions(fastboot PRIVATE
+ target_link_libraries(fastboot
+ 	libsparse libzip libcutils liblog libfsmgr libutil
+ 	libbase libext4 libselinux libsepol libdiagnoseusb crypto
+-	z pcre2-8 Threads::Threads dl)
++	z pcre2-8 Threads::Threads dl usb-1.0)
