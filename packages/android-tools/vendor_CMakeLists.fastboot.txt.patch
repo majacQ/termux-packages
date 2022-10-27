@@ -1,5 +1,5 @@
 diff --git a/vendor/CMakeLists.fastboot.txt b/vendor/CMakeLists.fastboot.txt
-index a217ecc..884c861 100644
+index a217ecc..bffefed 100644
 --- a/vendor/CMakeLists.fastboot.txt
 +++ b/vendor/CMakeLists.fastboot.txt
 @@ -72,7 +72,10 @@ add_library(libselinux STATIC
@@ -41,4 +41,4 @@ index a217ecc..884c861 100644
  	libsparse libzip libcutils liblog libfsmgr libutil
  	libbase libext4 libselinux libsepol libdiagnoseusb crypto
 -	z pcre2-8 Threads::Threads dl)
-+	z pcre2-8 Threads::Threads dl usb-1.0)
++	z pcre2-8 Threads::Threads dl usb-1.0 c)
