@@ -15,6 +15,11 @@ termux_step_start_build() {
 		exit 0
 	fi
 
+	if [ -n "$TERMUX_PYTHON_TARGET_DEPS" ] || [ -n "$TERMUX_PYTHON_BUILD_DEPS" ] || [ -n "$TERMUX_PYTHON_COMMOM_DEPS" ]; then
+		# Enable python setting
+		TERMUX_PKG_SETUP_PYTHON=true
+	fi
+
 	TERMUX_PKG_FULLVERSION=$TERMUX_PKG_VERSION
 	if [ "$TERMUX_PKG_REVISION" != "0" ] || [ "$TERMUX_PKG_FULLVERSION" != "${TERMUX_PKG_FULLVERSION/-/}" ]; then
 		# "0" is the default revision, so only include it if the upstream versions contains "-" itself
@@ -78,6 +83,7 @@ termux_step_start_build() {
 		# a continued build
 		return
 	fi
+
 	if [ "$TERMUX_ON_DEVICE_BUILD" = "true" ]; then
 		case "$TERMUX_APP_PACKAGE_MANAGER" in
 			"apt") apt install -y termux-elf-cleaner;;
